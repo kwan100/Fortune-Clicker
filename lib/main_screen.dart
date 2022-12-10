@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -19,12 +18,8 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
   void incrementCounter() async {
     setState(() {
       _counter++;
-      if (_counter == 1 || _counter % 50 == 0) {
-        fetchFortune();
-      }
+      fetchFortune();
     });
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('counter', _counter);
   }
 
   void fetchFortune() async {
@@ -40,24 +35,6 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
       setState(() {
         _fortune = json["fortune"];
       });
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("fortune", _fortune);
-    }
-  }
-
-  void getCounter() async {
-    final prefs = await SharedPreferences.getInstance();
-    int? counter = prefs.getInt("counter");
-    if (counter != null) {
-      _counter = counter;
-    }
-  }
-
-  void getFortune() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? fortune = prefs.getString("fortune");
-    if (fortune != null) {
-      _fortune = fortune;
     }
   }
 
@@ -73,8 +50,6 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     )..addListener(() {
       setState(() {});
     });
-    getCounter();
-    getFortune();
     super.initState();
   }
 
@@ -93,10 +68,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
           toolbarHeight: 100,
           title: Column(
             children: [
-              Text(_counter == 0 ? 'Fortune Clicker' : 'Fortune #${1 + (_counter ~/ 50)}', style: const TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: "Kavoon-Regular")),
-              padding(),
-              score(),
-              progress(),
+              Text(_counter == 0 ? 'Fortune Clicker' : 'Fortune #$_counter', style: const TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: "Kavoon-Regular")),
             ],
           ),
           backgroundColor: Colors.transparent.withOpacity(0.4),
@@ -134,27 +106,6 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
           ),
         ),
       );
-  }
-
-  Widget padding() {
-    if (_counter == 0) {
-      return Container();
-    }
-    return const SizedBox(height: 5);
-  }
-
-  Widget score() {
-    if (_counter == 0) {
-      return Container();
-    }
-    return Text(_counter == 1 ? '$_counter Cookie!' : '$_counter Cookies!', style: const TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: "Kavoon-Regular"));
-  }
-
-  Widget progress() {
-    if (_counter == 0) {
-      return Container();
-    }
-    return LinearProgressIndicator(value: (_counter % 50) / 50, minHeight: 10);
   }
 
   void _onTapDown(TapDownDetails details) {
