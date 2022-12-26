@@ -30,6 +30,8 @@ flutter:
   assets:
     - images/cookie.png
     - images/background.png
+    - images/pig.png
+    - images/cat.png
 
   fonts:
     - family: Kavoon-Regular

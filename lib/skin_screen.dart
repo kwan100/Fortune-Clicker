@@ -3,31 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
 
-class StoreScreen extends StatefulWidget {
-  const StoreScreen({Key? key, required this.counter, required this.add, required this.sound, required this.dark}) : super(key: key);
+class SkinScreen extends StatefulWidget {
+  const SkinScreen({Key? key, required this.counter, required this.sound, required this.dark, required this.coin, required this.envelope, required this.selected}) : super(key: key);
   final int counter;
-  final int add;
   final int sound;
   final int dark;
+  final int coin;
+  final int envelope;
+  final int selected;
 
   @override
-  StoreScreenState createState() => StoreScreenState();
+  SkinScreenState createState() => SkinScreenState();
 }
 
-class StoreScreenState extends State<StoreScreen> {
-  late int _add = widget.add;
+class SkinScreenState extends State<SkinScreen> {
   late int _counter = widget.counter;
+  late int _coin = widget.coin;
+  late int _envelope = widget.envelope;
+  late int _selected = widget.selected;
   late final int _sound = widget.sound;
   late final int _dark = widget.dark;
   var list = [];
-
-  void setAdd(add) async {
-    setState(() {
-      _add = add;
-    });
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('add', _add);
-  }
 
   void setCounter(counter) async {
     setState(() {
@@ -35,6 +31,30 @@ class StoreScreenState extends State<StoreScreen> {
     });
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('counter', _counter);
+  }
+
+  void setCoin(coin) async {
+    setState(() {
+      _coin = coin;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('coin', _coin);
+  }
+
+  void setEnvelope(envelope) async {
+    setState(() {
+      _envelope = envelope;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('envelope', _envelope);
+  }
+
+  void setSelected(selected) async {
+    setState(() {
+      _selected = selected;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('selected', _selected);
   }
 
   @override
@@ -67,13 +87,61 @@ class StoreScreenState extends State<StoreScreen> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                if (_add < 2 && _counter >= 250) {
+                if (_selected != 1) {
+                  if (_sound == 1) {
+                    SystemSound.play(SystemSoundType.click);
+                  }
+                  setSelected(1);
+                }
+              },
+              child: Container(
+                margin: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: _dark == 0 ? Colors.orange : Colors.black,
+                  border: Border.all(
+                    color: Colors.brown,
+                    width: 4.0,
+                  ),
+                ),
+                width: double.infinity,
+                height: 80.0,
+                child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          const TextSpan(text: 'Fortune Cookie', style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                          )),
+                          TextSpan(text: _selected == 1 ? '   ✓' : '', style: const TextStyle(
+                            color: Colors.brown,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                          )),
+                        ],
+                      ),
+                    )
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                if (_coin == 0 && _counter >= 250) {
                   if (_sound == 1) {
                     SystemSound.play(SystemSoundType.click);
                   }
                   _counter = ((_counter - 250) / 10).floor() * 10;
-                  setAdd(2);
                   setCounter(_counter);
+                  setCoin(1);
+                  setSelected(2);
+                }
+                else if (_coin == 1 && _selected != 2) {
+                  if (_sound == 1) {
+                    SystemSound.play(SystemSoundType.click);
+                  }
+                  setSelected(2);
                 }
               },
               child: Container(
@@ -92,15 +160,15 @@ class StoreScreenState extends State<StoreScreen> {
                     child: RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(text: _add < 2 ? 'Grandma (2x) : 250 ' : 'Grandma (2x)', style: const TextStyle(
+                          TextSpan(text: _coin == 0 ? 'Piggy Bank : 250 ' : 'Piggy Bank', style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
                           )),
                           WidgetSpan(
-                            child: _add < 2 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
+                            child: _coin == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
                           ),
-                          TextSpan(text: _add >= 2 ? '   ✓' : '', style: const TextStyle(
+                          TextSpan(text: _selected == 2 ? '   ✓' : '', style: const TextStyle(
                             color: Colors.brown,
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
@@ -113,59 +181,20 @@ class StoreScreenState extends State<StoreScreen> {
             ),
             GestureDetector(
               onTap: () {
-                if (_add < 5 && _counter >= 1500) {
+                if (_envelope == 0 && _counter >= 250) {
                   if (_sound == 1) {
                     SystemSound.play(SystemSoundType.click);
                   }
-                  _counter = ((_counter - 1500) / 10).floor() * 10;
-                  setAdd(5);
+                  _counter = ((_counter - 250) / 10).floor() * 10;
                   setCounter(_counter);
+                  setEnvelope(1);
+                  setSelected(3);
                 }
-              },
-              child: Container(
-                margin: const EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: _dark == 0 ? Colors.orange : Colors.black,
-                  border: Border.all(
-                    color: Colors.brown,
-                    width: 4.0,
-                  ),
-                ),
-                width: double.infinity,
-                height: 80.0,
-                child: Center(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(text: _add < 5 ? 'Robot (5x) : 1500 ' : 'Robot (5x)', style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
-                          )),
-                          WidgetSpan(
-                            child: _add < 5 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
-                          ),
-                          TextSpan(text: _add >= 5 ? '   ✓' : '', style: const TextStyle(
-                            color: Colors.brown,
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
-                          )),
-                        ],
-                      ),
-                    )
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (_add < 10 && _counter >= 5000) {
+                else if (_envelope == 1 && _selected != 3) {
                   if (_sound == 1) {
                     SystemSound.play(SystemSoundType.click);
                   }
-                  _counter = ((_counter - 5000) / 10).floor() * 10;
-                  setAdd(10);
-                  setCounter(_counter);
+                  setSelected(3);
                 }
               },
               child: Container(
@@ -184,15 +213,15 @@ class StoreScreenState extends State<StoreScreen> {
                   child: RichText(
                     text: TextSpan(
                       children: [
-                        TextSpan(text: _add < 10 ? 'Factory (10x) : 5000 ' : 'Factory (10x)', style: const TextStyle(
+                        TextSpan(text: _envelope == 0 ? 'Lucky Cat : 250 ' : 'Lucky Cat', style: const TextStyle(
                           color: Colors.white,
                           fontSize: 22.0,
                           fontWeight: FontWeight.bold,
                         )),
                         WidgetSpan(
-                          child: _add < 10 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
+                          child: _envelope == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
                         ),
-                        TextSpan(text: _add >= 10 ? '   ✓' : '', style: const TextStyle(
+                        TextSpan(text: _selected == 3 ? '   ✓' : '', style: const TextStyle(
                           color: Colors.brown,
                           fontSize: 22.0,
                           fontWeight: FontWeight.bold,
@@ -228,7 +257,9 @@ class StoreScreenState extends State<StoreScreen> {
                     if (_sound == 1) {
                       SystemSound.play(SystemSoundType.click);
                     }
-                    list.add(_add);
+                    list.add(_selected);
+                    list.add(_coin);
+                    list.add(_envelope);
                     list.add(_counter);
                     Navigator.pop(context, list);
                   },

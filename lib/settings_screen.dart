@@ -3,38 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
 
-class StoreScreen extends StatefulWidget {
-  const StoreScreen({Key? key, required this.counter, required this.add, required this.sound, required this.dark}) : super(key: key);
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key, required this.counter, required this.sound, required this.dark}) : super(key: key);
   final int counter;
-  final int add;
   final int sound;
   final int dark;
 
   @override
-  StoreScreenState createState() => StoreScreenState();
+  SettingsScreenState createState() => SettingsScreenState();
 }
 
-class StoreScreenState extends State<StoreScreen> {
-  late int _add = widget.add;
-  late int _counter = widget.counter;
-  late final int _sound = widget.sound;
-  late final int _dark = widget.dark;
+class SettingsScreenState extends State<SettingsScreen> {
+  late final int _counter = widget.counter;
+  late int _sound = widget.sound;
+  late int _dark = widget.dark;
   var list = [];
 
-  void setAdd(add) async {
+  void setSound(sound) async {
     setState(() {
-      _add = add;
+      _sound = sound;
     });
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('add', _add);
+    await prefs.setInt('sound', _sound);
   }
 
-  void setCounter(counter) async {
+  void setDark(dark) async {
     setState(() {
-      _counter = counter;
+      _dark = dark;
     });
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('counter', _counter);
+    await prefs.setInt('dark', _dark);
   }
 
   @override
@@ -67,13 +65,14 @@ class StoreScreenState extends State<StoreScreen> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                if (_add < 2 && _counter >= 250) {
-                  if (_sound == 1) {
-                    SystemSound.play(SystemSoundType.click);
-                  }
-                  _counter = ((_counter - 250) / 10).floor() * 10;
-                  setAdd(2);
-                  setCounter(_counter);
+                if (_sound == 1) {
+                  SystemSound.play(SystemSoundType.click);
+                }
+                if (_sound == 1) {
+                  setSound(0);
+                }
+                else {
+                  setSound(1);
                 }
               },
               child: Container(
@@ -92,15 +91,12 @@ class StoreScreenState extends State<StoreScreen> {
                     child: RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(text: _add < 2 ? 'Grandma (2x) : 250 ' : 'Grandma (2x)', style: const TextStyle(
+                          const TextSpan(text: 'Sound', style: TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
                           )),
-                          WidgetSpan(
-                            child: _add < 2 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
-                          ),
-                          TextSpan(text: _add >= 2 ? '   ✓' : '', style: const TextStyle(
+                          TextSpan(text: _sound == 1 ? '   ✓' : '', style: const TextStyle(
                             color: Colors.brown,
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
@@ -113,13 +109,14 @@ class StoreScreenState extends State<StoreScreen> {
             ),
             GestureDetector(
               onTap: () {
-                if (_add < 5 && _counter >= 1500) {
-                  if (_sound == 1) {
-                    SystemSound.play(SystemSoundType.click);
-                  }
-                  _counter = ((_counter - 1500) / 10).floor() * 10;
-                  setAdd(5);
-                  setCounter(_counter);
+                if (_sound == 1) {
+                  SystemSound.play(SystemSoundType.click);
+                }
+                if (_dark == 1) {
+                  setDark(0);
+                }
+                else {
+                  setDark(1);
                 }
               },
               child: Container(
@@ -138,15 +135,12 @@ class StoreScreenState extends State<StoreScreen> {
                     child: RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(text: _add < 5 ? 'Robot (5x) : 1500 ' : 'Robot (5x)', style: const TextStyle(
+                          const TextSpan(text: 'Dark Mode', style: TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
                           )),
-                          WidgetSpan(
-                            child: _add < 5 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
-                          ),
-                          TextSpan(text: _add >= 5 ? '   ✓' : '', style: const TextStyle(
+                          TextSpan(text: _dark == 1 ? '   ✓' : '', style: const TextStyle(
                             color: Colors.brown,
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
@@ -154,52 +148,6 @@ class StoreScreenState extends State<StoreScreen> {
                         ],
                       ),
                     )
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (_add < 10 && _counter >= 5000) {
-                  if (_sound == 1) {
-                    SystemSound.play(SystemSoundType.click);
-                  }
-                  _counter = ((_counter - 5000) / 10).floor() * 10;
-                  setAdd(10);
-                  setCounter(_counter);
-                }
-              },
-              child: Container(
-                margin: const EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: _dark == 0 ? Colors.orange : Colors.black,
-                  border: Border.all(
-                    color: Colors.brown,
-                    width: 4.0,
-                  ),
-                ),
-                width: double.infinity,
-                height: 80.0,
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(text: _add < 10 ? 'Factory (10x) : 5000 ' : 'Factory (10x)', style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                        WidgetSpan(
-                          child: _add < 10 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
-                        ),
-                        TextSpan(text: _add >= 10 ? '   ✓' : '', style: const TextStyle(
-                          color: Colors.brown,
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                      ],
-                    ),
-                  )
                 ),
               ),
             ),
@@ -214,7 +162,7 @@ class StoreScreenState extends State<StoreScreen> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: Padding (
-          padding: const EdgeInsets.only(top: 120.0, bottom: 40.0),
+          padding: const EdgeInsets.only(top: 240.0, bottom: 40.0),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
@@ -228,8 +176,8 @@ class StoreScreenState extends State<StoreScreen> {
                     if (_sound == 1) {
                       SystemSound.play(SystemSoundType.click);
                     }
-                    list.add(_add);
-                    list.add(_counter);
+                    list.add(_sound);
+                    list.add(_dark);
                     Navigator.pop(context, list);
                   },
                   icon: const Icon(Icons.home, size: 30.0),
