@@ -4,12 +4,12 @@ import 'package:flutter/services.dart';
 import 'dart:math';
 
 class SkinScreen extends StatefulWidget {
-  const SkinScreen({Key? key, required this.counter, required this.sound, required this.dark, required this.coin, required this.envelope, required this.selected}) : super(key: key);
+  const SkinScreen({Key? key, required this.counter, required this.sound, required this.dark, required this.pig, required this.cat, required this.selected}) : super(key: key);
   final int counter;
   final int sound;
   final int dark;
-  final int coin;
-  final int envelope;
+  final int pig;
+  final int cat;
   final int selected;
 
   @override
@@ -18,8 +18,8 @@ class SkinScreen extends StatefulWidget {
 
 class SkinScreenState extends State<SkinScreen> {
   late int _counter = widget.counter;
-  late int _coin = widget.coin;
-  late int _envelope = widget.envelope;
+  late int _pig = widget.pig;
+  late int _cat = widget.cat;
   late int _selected = widget.selected;
   late final int _sound = widget.sound;
   late final int _dark = widget.dark;
@@ -33,20 +33,20 @@ class SkinScreenState extends State<SkinScreen> {
     await prefs.setInt('counter', _counter);
   }
 
-  void setCoin(coin) async {
+  void setPig(pig) async {
     setState(() {
-      _coin = coin;
+      _pig = pig;
     });
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('coin', _coin);
+    await prefs.setInt('pig', _pig);
   }
 
-  void setEnvelope(envelope) async {
+  void setCat(cat) async {
     setState(() {
-      _envelope = envelope;
+      _cat = cat;
     });
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('envelope', _envelope);
+    await prefs.setInt('cat', _cat);
   }
 
   void setSelected(selected) async {
@@ -128,16 +128,16 @@ class SkinScreenState extends State<SkinScreen> {
             ),
             GestureDetector(
               onTap: () {
-                if (_coin == 0 && _counter >= 250) {
+                if (_pig == 0 && _counter >= 250) {
                   if (_sound == 1) {
                     SystemSound.play(SystemSoundType.click);
                   }
                   _counter = ((_counter - 250) / 10).floor() * 10;
                   setCounter(_counter);
-                  setCoin(1);
+                  setPig(1);
                   setSelected(2);
                 }
-                else if (_coin == 1 && _selected != 2) {
+                else if (_pig == 1 && _selected != 2) {
                   if (_sound == 1) {
                     SystemSound.play(SystemSoundType.click);
                   }
@@ -160,13 +160,13 @@ class SkinScreenState extends State<SkinScreen> {
                     child: RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(text: _coin == 0 ? 'Piggy Bank : 250 ' : 'Piggy Bank', style: const TextStyle(
+                          TextSpan(text: _pig == 0 ? 'Piggy Bank : 250 ' : 'Piggy Bank', style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
                           )),
                           WidgetSpan(
-                            child: _coin == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
+                            child: _pig == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
                           ),
                           TextSpan(text: _selected == 2 ? '   ✓' : '', style: const TextStyle(
                             color: Colors.brown,
@@ -181,16 +181,16 @@ class SkinScreenState extends State<SkinScreen> {
             ),
             GestureDetector(
               onTap: () {
-                if (_envelope == 0 && _counter >= 250) {
+                if (_cat == 0 && _counter >= 250) {
                   if (_sound == 1) {
                     SystemSound.play(SystemSoundType.click);
                   }
                   _counter = ((_counter - 250) / 10).floor() * 10;
                   setCounter(_counter);
-                  setEnvelope(1);
+                  setCat(1);
                   setSelected(3);
                 }
-                else if (_envelope == 1 && _selected != 3) {
+                else if (_cat == 1 && _selected != 3) {
                   if (_sound == 1) {
                     SystemSound.play(SystemSoundType.click);
                   }
@@ -213,13 +213,13 @@ class SkinScreenState extends State<SkinScreen> {
                   child: RichText(
                     text: TextSpan(
                       children: [
-                        TextSpan(text: _envelope == 0 ? 'Lucky Cat : 250 ' : 'Lucky Cat', style: const TextStyle(
+                        TextSpan(text: _cat == 0 ? 'Lucky Cat : 250 ' : 'Lucky Cat', style: const TextStyle(
                           color: Colors.white,
                           fontSize: 22.0,
                           fontWeight: FontWeight.bold,
                         )),
                         WidgetSpan(
-                          child: _envelope == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
+                          child: _cat == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
                         ),
                         TextSpan(text: _selected == 3 ? '   ✓' : '', style: const TextStyle(
                           color: Colors.brown,
@@ -258,8 +258,8 @@ class SkinScreenState extends State<SkinScreen> {
                       SystemSound.play(SystemSoundType.click);
                     }
                     list.add(_selected);
-                    list.add(_coin);
-                    list.add(_envelope);
+                    list.add(_pig);
+                    list.add(_cat);
                     list.add(_counter);
                     Navigator.pop(context, list);
                   },

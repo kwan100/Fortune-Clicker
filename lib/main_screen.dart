@@ -25,11 +25,15 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
   late int _sound = 1;
   late int _dark = 0;
   late int _started = 0;
-  late int _coin = 0;
-  late int _envelope = 0;
+  late int _pig = 0;
+  late int _cat = 0;
   late int _selected = 1;
 
   void incrementCounter() async {
+    setSelected(_selected);
+    setPig(_pig);
+    setCat(_cat);
+
     if (_sound == 1) {
       SystemSound.play(SystemSoundType.click);
     }
@@ -101,19 +105,19 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     }
   }
 
-  void getCoin() async {
+  void getPig() async {
     final prefs = await SharedPreferences.getInstance();
-    int? coin = prefs.getInt("coin");
-    if (coin != null) {
-      _coin = coin;
+    int? pig = prefs.getInt("pig");
+    if (pig != null) {
+      _pig = pig;
     }
   }
 
-  void getEnvelope() async {
+  void getCat() async {
     final prefs = await SharedPreferences.getInstance();
-    int? envelope = prefs.getInt("envelope");
-    if (envelope != null) {
-      _envelope = envelope;
+    int? cat = prefs.getInt("cat");
+    if (cat != null) {
+      _cat = cat;
     }
   }
 
@@ -157,20 +161,20 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     await prefs.setInt('dark', _dark);
   }
 
-  void setCoin(coin) async {
+  void setPig(pig) async {
     setState(() {
-      _coin = coin;
+      _pig = pig;
     });
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('coin', _coin);
+    await prefs.setInt('pig', _pig);
   }
 
-  void setEnvelope(envelope) async {
+  void setCat(cat) async {
     setState(() {
-      _envelope = envelope;
+      _cat = cat;
     });
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('envelope', _envelope);
+    await prefs.setInt('cat', _cat);
   }
 
   void setSelected(selected) async {
@@ -207,8 +211,8 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     getAdd();
     getSound();
     getDark();
-    getCoin();
-    getEnvelope();
+    getPig();
+    getCat();
     getSelected();
     super.initState();
   }
@@ -309,15 +313,15 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
                                 counter: _counter,
                                 sound: _sound,
                                 dark: _dark,
-                                coin: _coin,
-                                envelope: _envelope,
+                                pig: _pig,
+                                cat: _cat,
                                 selected: _selected,
                               ),
                         )
                     ).then((list){
                       setSelected(list[0]);
-                      setCoin(list[1]);
-                      setEnvelope(list[2]);
+                      setPig(list[1]);
+                      setCat(list[2]);
                       setCounter(list[3]);
                     });
                   },
