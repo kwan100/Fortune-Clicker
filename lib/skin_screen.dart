@@ -113,7 +113,7 @@ class SkinScreenState extends State<SkinScreen> {
                           const TextSpan(text: 'Fortune Cookie', style: TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: "Kavoon-Regular",
                           )),
                           TextSpan(text: _selected == 1 ? '   ✓' : '', style: const TextStyle(
                             color: Colors.brown,
@@ -163,7 +163,7 @@ class SkinScreenState extends State<SkinScreen> {
                           TextSpan(text: _pig == 0 ? 'Piggy Bank : 250 ' : 'Piggy Bank', style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: "Kavoon-Regular",
                           )),
                           WidgetSpan(
                             child: _pig == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
@@ -216,7 +216,7 @@ class SkinScreenState extends State<SkinScreen> {
                         TextSpan(text: _cat == 0 ? 'Lucky Cat : 250 ' : 'Lucky Cat', style: const TextStyle(
                           color: Colors.white,
                           fontSize: 22.0,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: "Kavoon-Regular",
                         )),
                         WidgetSpan(
                           child: _cat == 0 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),

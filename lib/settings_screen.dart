@@ -94,7 +94,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           const TextSpan(text: 'Sound', style: TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: "Kavoon-Regular",
                           )),
                           TextSpan(text: _sound == 1 ? '   ✓' : '', style: const TextStyle(
                             color: Colors.brown,
@@ -138,7 +138,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           const TextSpan(text: 'Dark Mode', style: TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: "Kavoon-Regular",
                           )),
                           TextSpan(text: _dark == 1 ? '   ✓' : '', style: const TextStyle(
                             color: Colors.brown,

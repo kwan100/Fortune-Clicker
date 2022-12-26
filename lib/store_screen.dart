@@ -95,7 +95,7 @@ class StoreScreenState extends State<StoreScreen> {
                           TextSpan(text: _add < 2 ? 'Grandma (2x) : 250 ' : 'Grandma (2x)', style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: "Kavoon-Regular",
                           )),
                           WidgetSpan(
                             child: _add < 2 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
@@ -141,7 +141,7 @@ class StoreScreenState extends State<StoreScreen> {
                           TextSpan(text: _add < 5 ? 'Robot (5x) : 1500 ' : 'Robot (5x)', style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: "Kavoon-Regular",
                           )),
                           WidgetSpan(
                             child: _add < 5 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
@@ -187,7 +187,7 @@ class StoreScreenState extends State<StoreScreen> {
                         TextSpan(text: _add < 10 ? 'Factory (10x) : 5000 ' : 'Factory (10x)', style: const TextStyle(
                           color: Colors.white,
                           fontSize: 22.0,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: "Kavoon-Regular",
                         )),
                         WidgetSpan(
                           child: _add < 10 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
