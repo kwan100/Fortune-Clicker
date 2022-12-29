@@ -82,11 +82,11 @@ class StoreScreenState extends State<StoreScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (_add < 2 && _counter >= 100) {
+                      if (_add < 2 && _counter >= 50) {
                         if (_sound == 1) {
                           SystemSound.play(SystemSoundType.click);
                         }
-                        _counter = ((_counter - 100) / 10).floor() * 10;
+                        _counter = ((_counter - 50) / 10).floor() * 10;
                         setAdd(2);
                         setCounter(_counter);
                       }
@@ -111,7 +111,7 @@ class StoreScreenState extends State<StoreScreen> {
                           child: RichText(
                             text: TextSpan(
                               children: [
-                                TextSpan(text: _add < 2 ? 'Grandma (2x) : 100 ' : 'Grandma (2x)', style: const TextStyle(
+                                TextSpan(text: _add < 2 ? 'Grandma (2x) : 50 ' : 'Grandma (2x)', style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20.0,
                                   fontFamily: "Kavoon-Regular",
@@ -132,11 +132,11 @@ class StoreScreenState extends State<StoreScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (_add < 5 && _counter >= 500) {
+                      if (_add < 5 && _counter >= 200) {
                         if (_sound == 1) {
                           SystemSound.play(SystemSoundType.click);
                         }
-                        _counter = ((_counter - 500) / 10).floor() * 10;
+                        _counter = ((_counter - 200) / 10).floor() * 10;
                         setAdd(5);
                         setCounter(_counter);
                       }
@@ -161,7 +161,7 @@ class StoreScreenState extends State<StoreScreen> {
                           child: RichText(
                             text: TextSpan(
                               children: [
-                                TextSpan(text: _add < 5 ? 'Robot (5x) : 500 ' : 'Robot (5x)', style: const TextStyle(
+                                TextSpan(text: _add < 5 ? 'Robot (5x) : 200 ' : 'Robot (5x)', style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20.0,
                                   fontFamily: "Kavoon-Regular",
@@ -182,62 +182,12 @@ class StoreScreenState extends State<StoreScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (_add < 10 && _counter >= 2000) {
+                      if (_add < 10 && _counter >= 1000) {
                         if (_sound == 1) {
                           SystemSound.play(SystemSoundType.click);
                         }
-                        _counter = ((_counter - 2000) / 10).floor() * 10;
+                        _counter = ((_counter - 1000) / 10).floor() * 10;
                         setAdd(10);
-                        setCounter(_counter);
-                      }
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.all(20.0),
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              'images/factory.png'),
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        color: _dark == 0 ? Colors.orange : Colors.black,
-                        border: Border.all(
-                          color: Colors.brown,
-                          width: 4.0,
-                        ),
-                      ),
-                      width: double.infinity,
-                      height: 80.0,
-                      child: Center(
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(text: _add < 10 ? 'Factory (10x) : 2000 ' : 'Factory (10x)', style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontFamily: "Kavoon-Regular",
-                                )),
-                                WidgetSpan(
-                                  child: _add < 10 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
-                                ),
-                                TextSpan(text: _add >= 10 ? '   ✓' : '', style: const TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                              ],
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (_add < 20 && _counter >= 5000) {
-                        if (_sound == 1) {
-                          SystemSound.play(SystemSoundType.click);
-                        }
-                        _counter = ((_counter - 5000) / 10).floor() * 10;
-                        setAdd(20);
                         setCounter(_counter);
                       }
                     },
@@ -261,15 +211,15 @@ class StoreScreenState extends State<StoreScreen> {
                           child: RichText(
                             text: TextSpan(
                               children: [
-                                TextSpan(text: _add < 20 ? 'Monopoly (20x) : 5000 ' : 'Monopoly (20x)', style: const TextStyle(
+                                TextSpan(text: _add < 10 ? 'Businessman (10x) : 1000 ' : 'Businessman (10x)', style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20.0,
                                   fontFamily: "Kavoon-Regular",
                                 )),
                                 WidgetSpan(
-                                  child: _add < 20 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
+                                  child: _add < 10 ? const Icon(Icons.cookie, color: Colors.white) : const SizedBox.shrink(),
                                 ),
-                                TextSpan(text: _add >= 20 ? '   ✓' : '', style: const TextStyle(
+                                TextSpan(text: _add >= 10 ? '   ✓' : '', style: const TextStyle(
                                   color: Colors.brown,
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,

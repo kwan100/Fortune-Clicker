@@ -272,12 +272,27 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
               ))
               : const BoxDecoration(color: Colors.black),
           child: Column(
-            children: [
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [_counter == 0 && _started == 0 ?
+              Center(
+                child: GestureDetector(
+                  onTap: incrementCounter,
+                  onTapDown: _onTapDown,
+                  onTapUp: _onTapUp,
+                  child: Transform.scale(
+                    scale: _scale,
+                    child: SizedBox(
+                        height: 250,
+                        child: Image.asset(_image),
+                      ),
+                  ),
+                ),
+              ) :
               Expanded(
                 child: ListView(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(25.0),
+                      padding: const EdgeInsets.all(30.0),
                       child: Text(_fortune, style: _dark == 0 ? const TextStyle(color: Colors.black, fontSize: 20.0, fontFamily: "Kavoon-Regular") : const TextStyle(color: Colors.white, fontSize: 20.0, fontFamily: "Kavoon-Regular")),
                     ),
                     Center(
