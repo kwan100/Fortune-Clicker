@@ -19,7 +19,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
   late double _scale;
   late AnimationController _controller;
   late int _counter = 0;
-  late String _fortune = "Click to Begin";
+  late String _fortune = "";
   late String _image = "images/cookie.png";
   late int _add = 1;
   late int _sound = 1;
@@ -27,12 +27,14 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
   late int _started = 0;
   late int _pig = 0;
   late int _cat = 0;
+  late int _leprechaun = 0;
   late int _selected = 1;
 
   void incrementCounter() async {
     setSelected(_selected);
     setPig(_pig);
     setCat(_cat);
+    setLeprechaun(_leprechaun);
 
     if (_sound == 1) {
       SystemSound.play(SystemSoundType.click);
@@ -53,7 +55,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     final response = await http.get(uri);
     final body = response.body;
     final json = jsonDecode(body);
-    if (json["fortune"].length > 100) {
+    if (json["fortune"].length > 150) {
       fetchFortune();
     }
     else{
@@ -121,6 +123,14 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     }
   }
 
+  void getLeprechaun() async {
+    final prefs = await SharedPreferences.getInstance();
+    int? leprechaun = prefs.getInt("leprechaun");
+    if (leprechaun != null) {
+      _leprechaun = leprechaun;
+    }
+  }
+
   void getSelected() async {
     final prefs = await SharedPreferences.getInstance();
     int? selected = prefs.getInt("selected");
@@ -177,6 +187,14 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     await prefs.setInt('cat', _cat);
   }
 
+  void setLeprechaun(leprechaun) async {
+    setState(() {
+      _leprechaun = leprechaun;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('leprechaun', _leprechaun);
+  }
+
   void setSelected(selected) async {
     setState(() {
       _selected = selected;
@@ -188,6 +206,9 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
       }
       else if (selected == 3) {
         _image = "images/cat.png";
+      }
+      else if (selected == 4) {
+        _image = "images/leprechaun.png";
       }
     });
     final prefs = await SharedPreferences.getInstance();
@@ -213,6 +234,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     getDark();
     getPig();
     getCat();
+    getLeprechaun();
     getSelected();
     super.initState();
   }
@@ -234,6 +256,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
             children: [
               Text(_counter == 0 && _started == 0 ? 'Fortune Clicker' : 'Level ${((25 + sqrt(625 + 100 * _counter)) / 50).floor()}', style: const TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: "Kavoon-Regular")),
               padding(),
+              begin(),
               score(),
               progress(),
             ],
@@ -249,24 +272,29 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
               ))
               : const BoxDecoration(color: Colors.black),
           child: Column(
-            mainAxisAlignment: _counter == 0 && _started == 0 ? MainAxisAlignment.center : MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 20.0),
-                child: Text(_fortune, style: _dark == 0 ? const TextStyle(color: Colors.black, fontSize: 20.0, fontFamily: "Kavoon-Regular") : const TextStyle(color: Colors.white, fontSize: 20.0, fontFamily: "Kavoon-Regular")),
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: incrementCounter,
-                  onTapDown: _onTapDown,
-                  onTapUp: _onTapUp,
-                  child: Transform.scale(
-                    scale: _scale,
-                    child: SizedBox(
-                      height: 250,
-                      child: Image.asset(_image),
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(25.0),
+                      child: Text(_fortune, style: _dark == 0 ? const TextStyle(color: Colors.black, fontSize: 20.0, fontFamily: "Kavoon-Regular") : const TextStyle(color: Colors.white, fontSize: 20.0, fontFamily: "Kavoon-Regular")),
                     ),
-                  ),
+                    Center(
+                      child: GestureDetector(
+                        onTap: incrementCounter,
+                        onTapDown: _onTapDown,
+                        onTapUp: _onTapUp,
+                        child: Transform.scale(
+                          scale: _scale,
+                          child: SizedBox(
+                            height: 250,
+                            child: Image.asset(_image),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Row(
@@ -292,7 +320,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     return Align(
         alignment: Alignment.bottomCenter,
         child: Padding (
-          padding: const EdgeInsets.only(top: 120.0, bottom: 40.0),
+          padding: const EdgeInsets.only(top: 10.0, bottom: 40.0),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
@@ -315,6 +343,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
                                 dark: _dark,
                                 pig: _pig,
                                 cat: _cat,
+                                leprechaun: _leprechaun,
                                 selected: _selected,
                               ),
                         )
@@ -322,7 +351,8 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
                       setSelected(list[0]);
                       setPig(list[1]);
                       setCat(list[2]);
-                      setCounter(list[3]);
+                      setLeprechaun(list[3]);
+                      setCounter(list[4]);
                     });
                   },
                   icon: const Icon(Icons.cookie, size: 30.0),
@@ -338,7 +368,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding (
-        padding: const EdgeInsets.only(top: 120.0, bottom: 40.0),
+        padding: const EdgeInsets.only(top: 10.0, bottom: 40.0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40),
@@ -381,7 +411,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     return Align(
         alignment: Alignment.bottomCenter,
         child: Padding (
-          padding: const EdgeInsets.only(top: 120.0, bottom: 40.0),
+          padding: const EdgeInsets.only(top: 10.0, bottom: 40.0),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
@@ -418,10 +448,14 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     );
   }
 
-  Widget padding() {
+  Widget begin() {
     if (_counter == 0 && _started == 0) {
-      return Container();
+      return const Text('Click to Begin', style: TextStyle(color: Colors.white, fontSize: 23.0, fontFamily: "Kavoon-Regular"));
     }
+    return Container();
+  }
+
+  Widget padding() {
     return const SizedBox(height: 5);
   }
 
@@ -429,7 +463,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     if (_counter == 0 && _started == 0) {
       return Container();
     }
-    return Text(_counter == 1 ? '$_counter Cookie!' : '$_counter Cookies!', style: const TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: "Kavoon-Regular"));
+    return Text(_counter == 1 ? '$_counter Cookie!' : '$_counter Cookies!', style: const TextStyle(color: Colors.white, fontSize: 23.0, fontFamily: "Kavoon-Regular"));
   }
 
   Widget progress() {

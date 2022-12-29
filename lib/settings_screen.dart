@@ -61,94 +61,112 @@ class SettingsScreenState extends State<SettingsScreen> {
             ))
             : const BoxDecoration(color: Colors.black),
         child: Column(
-          mainAxisAlignment: widget.counter == 0 ? MainAxisAlignment.center : MainAxisAlignment.end,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                if (_sound == 1) {
-                  SystemSound.play(SystemSoundType.click);
-                }
-                if (_sound == 1) {
-                  setSound(0);
-                }
-                else {
-                  setSound(1);
-                }
-              },
-              child: Container(
-                margin: const EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: _dark == 0 ? Colors.orange : Colors.black,
-                  border: Border.all(
-                    color: Colors.brown,
-                    width: 4.0,
-                  ),
-                ),
-                width: double.infinity,
-                height: 80.0,
-                child: Center(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          const TextSpan(text: 'Sound', style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.0,
-                            fontFamily: "Kavoon-Regular",
-                          )),
-                          TextSpan(text: _sound == 1 ? '   ✓' : '', style: const TextStyle(
-                            color: Colors.brown,
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
-                          )),
-                        ],
+          children: [
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  SizedBox(
+                    width: double.infinity,
+                    height: 60.0,
+                    child: Center(
+                      child: Text('Settings',
+                        style: TextStyle(
+                          color: _dark == 0 ? Colors.black : Colors.white,
+                          fontSize: 23.0,
+                          fontFamily: "Kavoon-Regular",
+                        ),
                       ),
-                    )
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (_sound == 1) {
-                  SystemSound.play(SystemSoundType.click);
-                }
-                if (_dark == 1) {
-                  setDark(0);
-                }
-                else {
-                  setDark(1);
-                }
-              },
-              child: Container(
-                margin: const EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: _dark == 0 ? Colors.orange : Colors.black,
-                  border: Border.all(
-                    color: Colors.brown,
-                    width: 4.0,
+                    ),
                   ),
-                ),
-                width: double.infinity,
-                height: 80.0,
-                child: Center(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          const TextSpan(text: 'Dark Mode', style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.0,
-                            fontFamily: "Kavoon-Regular",
-                          )),
-                          TextSpan(text: _dark == 1 ? '   ✓' : '', style: const TextStyle(
-                            color: Colors.brown,
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
-                          )),
-                        ],
+                  GestureDetector(
+                    onTap: () {
+                      if (_sound == 1) {
+                        SystemSound.play(SystemSoundType.click);
+                      }
+                      if (_sound == 1) {
+                        setSound(0);
+                      }
+                      else {
+                        setSound(1);
+                      }
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: _dark == 0 ? Colors.orange : Colors.black,
+                        border: Border.all(
+                          color: Colors.brown,
+                          width: 4.0,
+                        ),
                       ),
-                    )
-                ),
+                      width: double.infinity,
+                      height: 80.0,
+                      child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                const TextSpan(text: 'Sound', style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontFamily: "Kavoon-Regular",
+                                )),
+                                TextSpan(text: _sound == 1 ? '   ✓' : '', style: const TextStyle(
+                                  color: Colors.brown,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (_sound == 1) {
+                        SystemSound.play(SystemSoundType.click);
+                      }
+                      if (_dark == 1) {
+                        setDark(0);
+                      }
+                      else {
+                        setDark(1);
+                      }
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(20.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: _dark == 0 ? Colors.orange : Colors.black,
+                        border: Border.all(
+                          color: Colors.brown,
+                          width: 4.0,
+                        ),
+                      ),
+                      width: double.infinity,
+                      height: 80.0,
+                      child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                const TextSpan(text: 'Dark Mode', style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontFamily: "Kavoon-Regular",
+                                )),
+                                TextSpan(text: _dark == 1 ? '   ✓' : '', style: const TextStyle(
+                                  color: Colors.brown,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             button(),
@@ -162,7 +180,7 @@ class SettingsScreenState extends State<SettingsScreen> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: Padding (
-          padding: const EdgeInsets.only(top: 240.0, bottom: 40.0),
+          padding: const EdgeInsets.only(top: 10.0, bottom: 40.0),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
@@ -194,7 +212,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget score() {
-    return Text(widget.counter == 1 ? '$_counter Cookie!' : '$_counter Cookies!', style: const TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: "Kavoon-Regular"));
+    return Text(widget.counter == 1 ? '$_counter Cookie!' : '$_counter Cookies!', style: const TextStyle(color: Colors.white, fontSize: 23.0, fontFamily: "Kavoon-Regular"));
   }
 
   Widget progress() {

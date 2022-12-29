@@ -32,6 +32,11 @@ flutter:
     - images/background.png
     - images/pig.png
     - images/cat.png
+    - images/grandma.png
+    - images/robot.png
+    - images/factory.png
+    - images/monopoly.png
+    - images/leprechaun.png
 
   fonts:
     - family: Kavoon-Regular
